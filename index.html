@@ -1,0 +1,686 @@
+<!doctype html>
+<html class="scroll-smooth">
+
+<head>
+    <!-- UTF-8 encoding: makes sure all characters (Arabic, English, etc.) display correctly -->
+    <meta charset="UTF-8">
+    <!-- Viewport settings: makes the website responsive on all devices (mobile, tablet, desktop) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Description: short summary of the page for search engines -->
+    <meta name="description" content="Cafe">
+    <!-- Author: defines the name of the content creator -->
+    <meta name="author" content="Hadji Said">
+    <!-- Robots: tells search engines what to do (index/follow) -->
+    <meta name="robots" content="index, follow">
+    <!-- Theme color: sets the browser's address bar color on mobile -->
+    <meta name="theme-color" content="#251612">
+
+    <!-- Open Graph tags (for social media sharing) -->
+    <meta property="og:title" content="Cafe">
+    <meta property="og:description" content="Welcome to my Brew Cafe.">
+    <meta property="og:image" content="https://">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://">
+
+    <!-- Import Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Favicon (browser tab icon) -->
+    <link rel="icon" href="favicon.ico" type="">
+
+    <!-- Import Tailwind CSS output -->
+    <link href="output.css" rel="stylesheet">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <!-- Page Title -->
+    <title>Brew</title>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Customize scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #c6c6c6;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #000;
+        }
+
+        /* Hide scrollbar inside the order form */
+        .orderFormScrollBar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ======== Navigation Bar ======== -->
+    <div class="fixed w-full bg-gray-50 shadow-sm z-50">
+        <!-- Nav Bar content container -->
+        <div class="container mx-auto p-4 w-full flex items-center justify-between overflow-hidden">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <a href="#" id="home" class="font-bold text-2xl text-[#6B4E32]">Brew</a>
+            </div>
+
+            <!-- Navigation links (desktop view) -->
+            <div class="hidden md:block">
+                <a href="#menu-section" id="menu" class="p-6">Menu</a>
+                <a href="#about-section" id="about" class="p-6">About</a>
+                <a href="#testimonials-section" id="testimonials" class="p-6">Testimonials</a>
+            </div>
+
+            <!-- Menu button for mobile view -->
+            <div id="showSideBar" class="md:hidden">
+                <button class="text-gray-600 cursor-pointer"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== Mobile Side Bar ======== -->
+    <div id="sideBar"
+        class="fixed top-0 left-0 w-80 h-full bg-gray-50 border-r border-gray-200 space-y-4 z-50 -translate-x-80 duration-500">
+
+        <!-- Sidebar header: logo + close button -->
+        <div class="w-full flex justify-between p-4 py-5">
+            <h1 class="font-bold text-2xl text-[#6B4E32]">Brew</h1>
+            <button id="hideSideBar" class="w-8 h-8 rounded-full bg-gray-100 cursor-pointer"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <!-- Sidebar navigation links -->
+        <div class="flex flex-col">
+            <a href="#menu-section" id="menu" class="text-[#343534] p-4">Menu</a>
+            <a href="#about-section" id="about" class="text-[#343534] p-4">About</a>
+            <a href="#testimonials-section" id="testimonials" class="text-[#343534] p-4">Testimonials</a>
+        </div>
+    </div>
+
+    <!-- ======== Hero Section ======== -->
+    <div class="w-full bg-[url(/images/bg.jpg)] bg-center bg-cover">
+        <!-- Overlay to darken background image -->
+        <div class="w-full h-screen bg-black/50">
+            <!-- Hero Container -->
+            <div class="container mx-auto w-full h-screen flex items-center px-4">
+                <!-- Hero content -->
+                <div class="flex flex-col gap-8" data-aos="fade-right">
+
+                    <!-- Welcome heading -->
+                    <div>
+                        <h1 class="text-3xl sm:text-5xl tracking-wide text-white">Welcome to <span
+                                class="text-[#EDE0D4]">Brew,</span></h1>
+                    </div>
+
+                    <!-- Main hero tagline -->
+                    <div>
+                        <p class="text-3xl sm:text-5xl lg:text-6xl font-bold text-white">We serve the richest coffee
+                            <br> in the city!
+                        </p>
+                    </div>
+
+                    <!-- Button to show order form -->
+                    <div>
+                        <button id="showOrderForm"
+                            class="font-medium mt-2 px-8 py-3 rounded-full bg-[#EDE0D4] text-[#251612] border border-[#EDE0D4] hover:bg-transparent hover:text-[#EDE0D4] duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== Order Form ======== -->
+    <div id="orderForm"
+        class="fixed top-0 right-0 w-80 h-full bg-gray-50 border-l border-gray-200 transform translate-x-80 duration-500 z-[100]">
+        <div class="w-full h-full overflow-y-scroll pb-10 orderFormScrollBar">
+
+            <!-- Header: title + close button -->
+            <div
+                class="sticky top-0 w-full bg-gray-50 flex items-center justify-between border-b border-gray-200 p-4 z-50">
+                <h1 class="font-medium text-xl text-[#6B4E32]">☕ What's your order ?</h1>
+                <button id="hideOrderForm" class="w-8 h-8 rounded-full bg-gray-100 cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Small intro text + form  -->
+            <div class="flex flex-col gap-4 p-4">
+                <p class="text-sm text-gray-600">Hmmm... Today you look like you need a warm cup of coffee. Let's make
+                    your
+                    order!
+                </p>
+
+                <!-- Order submission form -->
+                <form action="" method="post">
+                    <div class="w-full h-full relative space-y-4">
+
+                        <!-- User information inputs -->
+                        <input name="name" type="text" placeholder="Name" id="nameInput"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:border-gray-400 duration-500">
+                        <input name="Phone" type="text" placeholder="Phone" id="phoneInput"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:border-gray-400 duration-500">
+                        <input name="email" type="email" placeholder="Email" id="emailInput"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:border-gray-400 duration-500">
+
+                        <!-- Hidden field to store selected order -->
+                        <input type="hidden" id="selectedOrder" name="order">
+
+                        <!-- Coffee selection list -->
+                        <ul id="dropdownList"
+                            class="relative w-full border border-gray-300 rounded-lg overflow-hidden z-10">
+
+                            <!-- List header with clear button -->
+                            <div class="w-full flex justify-between px-4 py-3 border-b border-gray-200">
+                                <h2 id="dropdownText">Select Order</h2>
+                                <button id="clearSelectedOrder" type="button"
+                                    class="text-gray-300 duration-300 cursor-pointer">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+
+                            <!-- coffee options -->
+                            <li id="espressoOption"
+                                class="text-gray-600 hover:text-[#343534] hover:bg-gray-100 p-4 duration-500 cursor-pointer">
+                                Espresso</li>
+                            <li id="cappuccinoOption"
+                                class="text-gray-600 hover:text-[#343534] hover:bg-gray-100 p-4 duration-500 cursor-pointer">
+                                Cappuccino</li>
+                            <li id="latteOption"
+                                class="text-gray-600 hover:text-[#343534] hover:bg-gray-100 p-4 duration-500 cursor-pointer">
+                                Latte</li>
+                            <li id="macchiatoOption"
+                                class="text-gray-600 hover:text-[#343534] hover:bg-gray-100 p-4 duration-500 cursor-pointer">
+                                Macchiato</li>
+                            <li id="mochaOption"
+                                class="text-gray-600 hover:text-[#343534] hover:bg-gray-100 p-4 duration-500 cursor-pointer">
+                                Mocha</li>
+                            <li id="icedCoffeeOption"
+                                class="text-gray-600 hover:text-[#343534] hover:bg-gray-100 p-4 duration-500 cursor-pointer">
+                                Iced Coffee</li>
+                            <li id="caramelLatteOption"
+                                class="text-gray-600 hover:text-[#343534] hover:bg-gray-100 p-4 duration-500 cursor-pointer">
+                                Caramel Latte</li>
+                            <li id="hazelnutCoffeeOption"
+                                class="text-gray-600 hover:text-[#343534] hover:bg-gray-100 p-4 duration-500 cursor-pointer">
+                                Hazelnut Coffee</li>
+                        </ul>
+
+                        <!-- Submit button -->
+                        <div>
+                            <button type="submit" id="submitBtn"
+                                class="w-full px-4 py-3 bg-[#6B4E32] text-white rounded-lg font-medium tracking-wide cursor-pointer hover:bg-[#7C5E42] duration-500">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order form footer -->
+            <footer class="w-full bg-gray-50 absolute bottom-0 text-center py-3 border-t border-gray-200 z-50">
+                <span class="text-sm text-gray-600">©2025 Brew Coffee</span>
+            </footer>
+        </div>
+
+    </div>
+
+    <!-- ======== Menu Section (placeholder content) ======== -->
+    <div id="menu-section">
+        <div class="container mx-auto p-4 py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Placeholder items for menu -->
+
+            <!-- Espresso -->
+            <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg p-4 space-y-4" data-aos="fade-up">
+                <div class="w-full h-[480px] flex items-center overflow-hidden rounded-lg">
+                    <img src="images/espresso.jpg" alt="">
+                </div>
+
+                <div class="w-full space-y-4">
+                    <h1 class="font-bold text-2xl lg:text-3xl text-[#443523]">Espresso</h1>
+                    <p class="text-[#5E5246] text-sm sm:text-base">A bold shot of pure energy — rich, intense, and full
+                        of flavor</p>
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <h1 class="font-medium">MAD. 40</h1>
+                            <h1 class="text-sm text-[#5E5246]">Free Shipping</h1>
+                        </div>
+                        <button type="button" id="espressoCoffee" data-coffee="Espresso"
+                            class="px-6 py-2 text-sm text-[#FBF8F5] bg-[#6B4E32] border border-[#6B4E32] hover:bg-transparent hover:text-[#6B4E32] rounded-md duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cappuccino -->
+            <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg p-4 space-y-4" data-aos="fade-up">
+                <div class="w-full h-[480px] flex items-center overflow-hidden rounded-lg">
+                    <img src="images/cappuccino.jpg" alt="">
+                </div>
+
+                <div class="w-full space-y-4">
+                    <h1 class="font-bold text-2xl lg:text-3xl text-[#443523]">Cappuccino</h1>
+                    <p class="text-[#5E5246] text-sm sm:text-base">Smooth espresso topped with creamy milk foam — the
+                        perfect morning balance</p>
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <span class="font-medium">MAD. 45</span>
+                            <h1 class="text-sm text-[#5E5246]">Free Shipping</h1>
+                        </div>
+                        <button type="button" id="cappuccinoCoffee" data-coffee="Cappuccino"
+                            class="px-6 py-2 text-sm text-[#FBF8F5] bg-[#6B4E32] border border-[#6B4E32] hover:bg-transparent hover:text-[#6B4E32] rounded-md duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Latte -->
+            <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg p-4 space-y-4" data-aos="fade-up">
+                <div class="w-full h-[480px] flex items-center overflow-hidden rounded-lg">
+                    <img src="images/latte.jpg" alt="">
+                </div>
+
+                <div class="w-full space-y-4">
+                    <h1 class="font-bold text-2xl lg:text-3xl text-[#443523]">Latte</h1>
+                    <p class="text-[#5E5246] text-sm sm:text-base">Gentle and velvety — espresso meets steamed milk in a
+                        cozy hug</p>
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <span class="font-medium">MAD. 45</span>
+                            <h1 class="text-sm text-[#5E5246]">Free Shipping</h1>
+                        </div>
+                        <button type="button" id="latte" data-coffee="Latte"
+                            class="px-6 py-2 text-sm text-[#FBF8F5] bg-[#6B4E32] border border-[#6B4E32] hover:bg-transparent hover:text-[#6B4E32] rounded-md duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Macchiato -->
+            <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg p-4 space-y-4" data-aos="fade-up">
+                <div class="w-full h-[480px] flex items-center overflow-hidden rounded-lg">
+                    <img src="images/macchiato.jpg" alt="">
+                </div>
+
+                <div class="w-full space-y-4">
+                    <h1 class="font-bold text-2xl lg:text-3xl text-[#443523]">Macchiato</h1>
+                    <p class="text-[#5E5246] text-sm sm:text-base">Strong espresso kissed with a touch of milk — simple,
+                        elegant, unforgettable</p>
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <span class="font-medium">MAD. 40</span>
+                            <h1 class="text-sm text-[#5E5246]">Free Shipping</h1>
+                        </div>
+                        <button type="button" id="macchiatoCoffee" data-coffee="Macchiato"
+                            class="px-6 py-2 text-sm text-[#FBF8F5] bg-[#6B4E32] border border-[#6B4E32] hover:bg-transparent hover:text-[#6B4E32] rounded-md duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mocha -->
+            <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg p-4 space-y-4" data-aos="fade-up">
+                <div class="w-full h-[480px] flex items-center overflow-hidden rounded-lg">
+                    <img src="images/mocha.jpg" alt="">
+                </div>
+
+                <div class="w-full space-y-4">
+                    <h1 class="font-bold text-2xl lg:text-3xl text-[#443523]">Mocha</h1>
+                    <p class="text-[#5E5246] text-sm sm:text-base">A chocolate lover’s dream — espresso blended with
+                        rich cocoa and silky milk</p>
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <span class="font-medium">MAD. 48</span>
+                            <h1 class="text-sm text-[#5E5246]">Free Shipping</h1>
+                        </div>
+                        <button type="button" id="mochaCoffee" data-coffee="Mocha"
+                            class="px-6 py-2 text-sm text-[#FBF8F5] bg-[#6B4E32] border border-[#6B4E32] hover:bg-transparent hover:text-[#6B4E32] rounded-md duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Iced Coffee -->
+            <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg p-4 space-y-4" data-aos="fade-up">
+                <div class="w-full h-[480px] flex items-center overflow-hidden rounded-lg">
+                    <img src="images/icedCoffee.jpg" alt="">
+                </div>
+
+                <div class="w-full space-y-4">
+                    <h1 class="font-bold text-2xl lg:text-3xl text-[#443523]">Iced Coffee</h1>
+                    <p class="text-[#5E5246] text-sm sm:text-base">Cool, refreshing, and bold — your favorite coffee
+                        with an icy twist</p>
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <span class="font-medium">MAD. 45</span>
+                            <h1 class="text-sm text-[#5E5246]">Free Shipping</h1>
+                        </div>
+                        <button type="button" id="Iced Coffee" data-coffee="Iced Coffee"
+                            class="px-6 py-2 text-sm text-[#FBF8F5] bg-[#6B4E32] border border-[#6B4E32] hover:bg-transparent hover:text-[#6B4E32] rounded-md duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caramel Latte -->
+            <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg p-4 space-y-4" data-aos="fade-up">
+                <div class="w-full h-[480px] flex items-center overflow-hidden rounded-lg">
+                    <img src="images/caramelLatte.jpg" alt="">
+                </div>
+
+                <div class="w-full space-y-4">
+                    <h1 class="font-bold text-2xl lg:text-3xl text-[#443523]">Caramel Latte</h1>
+                    <p class="text-[#5E5246] text-sm sm:text-base">Sweet caramel swirls in creamy latte — one sip and
+                        you’re in heaven</p>
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <span class="font-medium">MAD. 50</span>
+                            <h1 class="text-sm text-[#5E5246]">Free Shipping</h1>
+                        </div>
+                        <button type="button" id="Caramel Latte" data-coffee="Caramel Latte"
+                            class="px-6 py-2 text-sm text-[#FBF8F5] bg-[#6B4E32] border border-[#6B4E32] hover:bg-transparent hover:text-[#6B4E32] rounded-md duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hazelnut Coffee -->
+            <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg p-4 space-y-4" data-aos="fade-up">
+                <div class="w-full h-[480px] flex items-center overflow-hidden rounded-lg">
+                    <img src="images/hazelnutCoffee.jpg" alt="">
+                </div>
+
+                <div class="w-full space-y-4">
+                    <h1 class="font-bold text-2xl lg:text-3xl text-[#443523]">Hazelnut Coffee</h1>
+                    <p class="text-[#5E5246] text-sm sm:text-base">Nutty aroma meets deep espresso flavor — cozy,
+                        aromatic, irresistible</p>
+                    <div class="w-full flex justify-between">
+                        <div>
+                            <span class="font-medium">MAD. 47</span>
+                            <h1 class="text-sm text-[#5E5246]">Free Shipping</h1>
+                        </div>
+                        <button type="button" id="Hazelnut Coffee" data-coffee="Hazelnut Coffee"
+                            class="px-6 py-2 text-sm text-[#FBF8F5] bg-[#6B4E32] border border-[#6B4E32] hover:bg-transparent hover:text-[#6B4E32] rounded-md duration-500 cursor-pointer">Order
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== About Section ======== -->
+    <div id="about-section" class="w-full bg-[url(/images/aboutimg.jpg)] bg-center bg-cover">
+        <!-- Dark overlay on top of the background image -->
+        <div class="w-full h-full bg-black/80 flex justify-center items-center py-20">
+            <!-- Inner container to center the content -->
+            <div class="w-full sm:w-lg xl:w-3xl text-center space-y-10 p-4">
+
+                <div class="space-y-6">
+                    <!-- Section title -->
+                    <h1 class="font-bold text-5xl text-[#EDE0D4]" data-aos="fade-up">About Us</h1>
+                    <p class="text-xl text-gray-50 tracking-wider" data-aos="fade-up" data-aos-delay="100">Where passion
+                        meets coffee aroma</p>
+                </div>
+
+                <!-- Description text -->
+                <p class="leading-12 text-justify text-sm sm:text-base text-white/80" data-aos="fade-up"
+                    data-aos-delay="300">
+                    At Brew, every cup tells a story — a story of passion, patience, and the simple joy found in a
+                    perfect sip of coffee.
+                    We believe coffee is more than a drink; it’s a daily ritual that brings people together, sparks
+                    ideas, and turns moments into memories.
+
+                    From the first aroma of freshly roasted beans to the final pour, everything we do is guided by love
+                    and care.
+                    Each cup is crafted by hand, using quality ingredients and a heart full of warmth — because for us,
+                    coffee isn’t just made, it’s created with feeling.
+
+                    Whether you come for a quiet morning espresso or a sweet caramel latte with friends, you’ll always
+                    find comfort, calm, and connection here.
+
+                    Brew — made with heart, shared with you.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TESTIMONIALS SECTION ==================== -->
+    <div id="testimonials-section" class="w-full bg-[#FEFCFA]">
+        <!-- Container for spacing and layout -->
+        <div class="container mx-auto px-4 py-20 space-y-20">
+
+            <!-- Section Title -->
+            <div class="text-center">
+                <h1 class="font-bold text-4xl text-[#6B4E32]" data-aos="fade-up">Hear What Our Customers Have to Say
+                </h1>
+            </div>
+
+            <!-- Grid of Testimonials -->
+            <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- ===== Testimonial Card 1 ===== -->
+                <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg shadow-sm flex flex-col gap-6 p-4"
+                    data-aos="fade-up">
+                    <!-- Profile Info + Rating -->
+                    <div class="w-full flex justify-between items-center">
+                        <!-- User Info -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-10 h-10 rounded-full overflow-hidden">
+                                <img src="/icons/profile.png" alt="">
+                            </div>
+                            <div>
+                                <span class="font-medium">XXXXX</span>
+                                <h3 class="text-sm text-[#5E5246]">instagram</h3>
+                            </div>
+                        </div>
+
+                        <!-- Star Rating -->
+                        <div>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Text -->
+                    <p class="text-gray-600 text-sm">“Brew feels like home. The coffee is always perfect, and the team
+                        makes you feel like family. My favorite spot to start the day!”</p>
+                </div>
+
+                <!-- ===== Testimonial Card 2 ===== -->
+                <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg shadow-sm flex flex-col gap-6 p-4"
+                    data-aos="fade-up">
+                    <!-- Profile Info + Rating -->
+                    <div class="w-full flex justify-between items-center">
+                        <!-- User Info -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-10 h-10 rounded-full overflow-hidden">
+                                <img src="/icons/profile.png" alt="">
+                            </div>
+                            <div>
+                                <span class="font-medium">XXXXX</span>
+                                <h3 class="text-sm text-[#5E5246]">X (Twitter)</h3>
+                            </div>
+                        </div>
+
+                        <!-- Star Rating -->
+                        <div>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Text -->
+                    <p class="text-gray-600 text-sm">“There’s something special about this place. The aroma, the calm
+                        music, and that first sip — it’s more than coffee, it’s an experience.”</p>
+                </div>
+
+                <!-- ===== Testimonial Card 3 ===== -->
+                <div class="w-full bg-[#FBF8F5] border border-[#F0E5DA] rounded-lg shadow-sm flex flex-col gap-6 p-4"
+                    data-aos="fade-up">
+                    <!-- Profile Info + Rating -->
+                    <div class="w-full flex justify-between items-center">
+                        <!-- User Info -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-10 h-10 rounded-full overflow-hidden">
+                                <img src="/icons/profile.png" alt="">
+                            </div>
+                            <div>
+                                <span class="font-medium">XXXXX</span>
+                                <h3 class="text-sm text-[#5E5246]">Facebook</h3>
+                            </div>
+                        </div>
+
+                        <!-- Star Rating -->
+                        <div>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Text -->
+                    <p class="text-gray-600 text-sm">“I stopped by once, and now I can’t stop coming back. Every cup
+                        tastes like it was made with real care and love.”</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== SUBSCRIBE SECTION ==================== -->
+    <div class="w-full bg-[url(/images/subscribeimg.jpg)] bg-center bg-cover overflow-hidden">
+        <!-- Dark overlay to enhance text visibility -->
+        <div class="w-full h-96 bg-black/80 px-4 py-20 flex justify-center">
+            <!-- Main content container -->
+            <div class="w-full sm:w-2xl flex flex-col gap-10">
+                <!-- Section Title and Description -->
+                <div class="text-center space-y-6">
+                    <h1 class="font-bold text-2xl sm:text-4xl text-[#EDE0D4]" data-aos="fade-up">Join in and get 15%
+                        Off!</h1>
+                    <p class="text-sm sm:text-xl text-gray-200" data-aos="fade-up">subscribe to our newsLetter and get
+                        15% off discount
+                        code.</p>
+                </div>
+
+                <!-- Subscription Form -->
+                <form action="" method="" class="w-full flex flex-col sm:flex-row gap-4" data-aos="fade-up">
+
+                    <!-- Email Input Field -->
+                    <div class="w-full flex items-center bg-[#FEFCFA] rounded-full">
+                        <i class="fa-regular fa-envelope text-gray-400 ml-8"></i>
+                        <input type="email" name="email" autocomplete="off" placeholder="Email address"
+                            class="w-full px-4 py-4 outline-none">
+                    </div>
+
+                    <!-- Subscribe Button -->
+                    <button type="button"
+                        class="px-10 py-4 bg-[#5E5246] border border-[#5E5246] rounded-full text-[#EDE0D4] font-medium hover:bg-transparent duration-500 cursor-pointer">Subscribe</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Footer Section ==================== -->
+    <div class="bg-[#5E5246]">
+        <!-- Main container with padding and centered content -->
+        <div class="container mx-auto px-4 pt-10">
+            <!-- Footer layout: multiple columns spaced apart -->
+            <div class="flex flex-col sm:flex-row gap-10 sm:gap-20">
+                <!-- Logo section -->
+                <div>
+                    <h1 class="text-5xl text-[#EDE0D4] font-bold">Brew</h1>
+                </div>
+
+                <div class="flex-1 flex sm:justify-between gap-10 flex-wrap">
+                    <!-- Privacy section -->
+                    <div class="flex flex-col gap-4">
+                        <h1 class="font-medium text-xl text-[#EDE0D4]/80">PRIVACY</h1>
+
+                        <!-- Privacy-related links -->
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Terms of use</a>
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Privacy policy</a>
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">cookies</a>
+                    </div>
+
+                    <!-- Services section -->
+                    <div class="flex flex-col gap-4">
+                        <h1 class="font-medium text-xl text-[#EDE0D4]/80">SERVICES</h1>
+
+                        <!-- Service-related links -->
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Shop</a>
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Order ahead</a>
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Menu</a>
+                    </div>
+
+                    <!-- About us section -->
+                    <div class="flex flex-col gap-4">
+                        <h1 class="font-medium text-xl text-[#EDE0D4]/80">ABOUT US</h1>
+
+                        <!-- Company-related links -->
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Find a location</a>
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">About Us</a>
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Our story</a>
+                    </div>
+
+                    <!-- Information section -->
+                    <div class="flex flex-col gap-4">
+                        <h1 class="font-medium text-xl text-[#EDE0D4]/80">IFORMATION</h1>
+
+                        <!-- General information links -->
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Plans & pricing</a>
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Sell your products</a>
+                        <a href="#" class="text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500">Jobs</a>
+                    </div>
+
+                    <!-- Social media section -->
+                    <div class="flex flex-col gap-4">
+                        <h1 class="font-medium text-xl text-[#EDE0D4]/80">SOCIAL MEDIA</h1>
+
+                        <!-- Social media icons -->
+                        <div class="flex gap-4">
+                            <a href="#" class="text-lg text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500"><i
+                                    class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="text-lg text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500"><i
+                                    class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="text-lg text-[#EDE0D4]/60 hover:text-[#EDE0D4] duration-500"><i
+                                    class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright text -->
+            <div class="text-center text-sm text-[#EDE0D4]/60 pt-8 pb-2">
+                © 2025 Brew. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <!-- Links JavaScript file -->
+    <script src="script.js"></script>
+
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: false,
+        });
+    </script>
+</body>
+
+</html>
